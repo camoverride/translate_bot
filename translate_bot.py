@@ -51,6 +51,9 @@ while True:
                     logging.debug(f"Switched to {new_lang}")
                 
                 if text == "silent" or "Silent" or "stop" or "Stop":
+                    print(">>>>>>>>>>>>>>>>>>>>>>>>", text)
+                    print("<<<<<<<<<<<<<<<<", text == "silent")
+                    print("<<<<<<<<<<<<<<<<", str(text) == "silent")
                     ACTIVE_MODE = False
                 if text == "active" or "Active" or "start" or "Start":
                     ACTIVE_MODE = True
