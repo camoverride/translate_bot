@@ -7,7 +7,7 @@ from gtts_lang_codes import check_for_translation_change
 
 
 # Global settings
-logging.basicConfig(level=logging.DEBUG)
+logging.basicConfig(level=logging.WARNING)
 # logging.basicConfig(filename="logs.log", encoding="utf-8", level=logging.DEBUG)
 
 recognizer = sr.Recognizer()
