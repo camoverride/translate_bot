@@ -1,0 +1,19 @@
+; Line 14 (ExecStart) might change depending on tour
+
+[Unit]
+Description=translate bot
+After=multi-user.target
+StartLimitIntervalSec=30
+StartLimitBurst=2
+
+[Service]
+Type=simple
+User=pi
+Environment="PULSE_RUNTIME_PATH=/run/user/1000/pulse/"
+Environment="XDG_RUNTIME_DIR=/run/user/1000"
+Restart=always
+WorkingDirectory=/home/pi/translate_bot
+ExecStart=/home/pi/translate_bot/.venv/bin/python /home/pi/translate_bot/translate_bot.py
+
+[Install]
+WantedBy=multi-user.target
