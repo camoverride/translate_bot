@@ -14,6 +14,7 @@ recognizer = sr.Recognizer()
 translator = Translator()
 recognizer.dynamic_energy_threshold = False # stop mic from recording ambient noise
 TRANSLATE_TO = "es"
+ACTIVE_MODE = True
 
 
 while True:
@@ -47,11 +48,17 @@ while True:
             if new_lang:
                 TRANSLATE_TO = new_lang
                 logging.debug(f"Switched to {new_lang}")
+            
+            if text == "silent" or "Silent" or "stop" or "Stop":
+                ACTIVE_MODE = False
+            if text == "active" or "Active" or "start" or "Start":
+                ACTIVE_MODE = True
+            
+            if ACTIVE_MODE:
+                translation = translator.translate(text, dest=TRANSLATE_TO).text
+                logging.debug(f"Translated text: {translation}")
 
-            translation = translator.translate(text, dest=TRANSLATE_TO).text
-            logging.debug(f"Translated text: {translation}")
-
-            logging.debug("Translating text!")
-            tts = gTTS(translation, lang=TRANSLATE_TO)
-            tts.save(".tts.mp3")
-            playsound(".tts.mp3")
+                logging.debug("Translating text!")
+                tts = gTTS(translation, lang=TRANSLATE_TO)
+                tts.save(".tts.mp3")
+                playsound(".tts.mp3")

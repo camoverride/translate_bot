@@ -23,6 +23,8 @@ Change volume: `alsamixer`
 
 `nohup python translate_bot.py &`
 
+Stop: `sudo shutdown -h now`
+
 
 ## How to use
 
