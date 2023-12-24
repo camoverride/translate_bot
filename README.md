@@ -16,6 +16,8 @@ Translates to a language of your choice!
 Suppress annoying "pop-up" noise:
 `sudo mv /usr/share/piwiz/srprompt.wav /usr/share/piwiz/srprompt.wav.bak`
 
+Change volume: `alsamixer`
+
 
 ## Run
 
