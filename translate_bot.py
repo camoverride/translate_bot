@@ -4,6 +4,7 @@ from gtts import gTTS
 from playsound import playsound
 import speech_recognition as sr
 from gtts_lang_codes import check_for_translation_change
+import mute_alsa
 
 
 
@@ -40,7 +41,7 @@ def noalsaerr():
 
 # Main event loop
 while True:
-    logging.warn("-------------------------------------------")
+    logging.warning("-------------------------------------------")
     try: # The main loop always continues!
         with noalsaerr() as _, sr.Microphone() as source:
             text = None
