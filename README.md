@@ -26,6 +26,17 @@ Change volume: `alsamixer`
 Stop: `sudo shutdown -h now`
 
 
+Start a service with *systemd*. This will start the program when the computer starts and revive it when it dies. Copy the contents of `translate_bot.service` to `/etc/systemd/system/translate_bot.service` (via `sudo vim /etc/systemd/system/translate_bot.service`).
+
+Start the service using the commands below:
+
+- `sudo systemctl daemon-reload`
+- Start it on boot: `sudo systemctl enable translate_bot.service`
+- Start it right now: `sudo systemctl start translate_bot.service`
+- Stop it right now: `sudo systemctl stop translate_bot.service`
+- Get logs: `sudo journalctl -u translate_bot | tail`
+
+
 ## How to use
 
 The bot listens to your speech and repeats it back, translated into a new language.
