@@ -39,7 +39,7 @@ codes = {
 "ko": "Korean",
 "la": "Latin",
 "lv": "Latvian",
-"mk": "Macedonian",
+# "mk": "Macedonian",
 "ml": "Malayalam",
 "mr": "Marathi",
 # "my": "Myanmar (Burmese)",
