@@ -1,10 +1,10 @@
 import logging
+import os
 from googletrans import Translator
 from gtts import gTTS
 from playsound import playsound
 import speech_recognition as sr
 from gtts_lang_codes import check_for_translation_change
-import mute_alsa
 
 
 
@@ -30,6 +30,9 @@ def py_error_handler(filename, line, function, err, fmt):
     pass
 
 c_error_handler = ERROR_HANDLER_FUNC(py_error_handler)
+
+# Suppress Jack server warning
+os.start("jack_control start")
 
 @contextmanager
 def noalsaerr():
