@@ -6,6 +6,7 @@ import speech_recognition as sr
 from gtts_lang_codes import check_for_translation_change
 
 
+
 # Global settings
 logging.basicConfig(level=logging.WARNING)
 # logging.basicConfig(filename="logs.log", encoding="utf-8", level=logging.DEBUG)
@@ -17,7 +18,7 @@ TRANSLATE_TO = "es"
 ACTIVE_MODE = True
 
 
-
+# Suppress horrible Alsa debug
 from ctypes import *
 from contextlib import contextmanager
 import pyaudio
@@ -37,12 +38,7 @@ def noalsaerr():
     asound.snd_lib_error_set_handler(None)
 
 
-
-
-
-
-
-
+# Main event loop
 while True:
     logging.warn("-------------------------------------------")
     try: # The main loop always continues!
