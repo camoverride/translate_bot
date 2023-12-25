@@ -33,7 +33,7 @@ def py_error_handler(filename, line, function, err, fmt):
 c_error_handler = ERROR_HANDLER_FUNC(py_error_handler)
 
 # Suppress Jack server warning
-os.start("jack_control start")
+os.system("jack_control start")
 
 @contextmanager
 def noalsaerr():
