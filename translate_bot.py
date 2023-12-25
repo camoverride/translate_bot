@@ -1,3 +1,4 @@
+from datetime import datetime
 import logging
 import os
 from googletrans import Translator
@@ -44,7 +45,8 @@ def noalsaerr():
 
 # Main event loop
 while True:
-    logging.warning("-------------------------------------------")
+    logging.warning("--------------------------------------")
+    logging.warning(f"Function started at: {datetime.now()}")
     try: # The main loop always continues!
         with noalsaerr() as _, sr.Microphone() as source:
             text = None
