@@ -85,7 +85,9 @@ def check_for_translation_change(transcription):
 
     Returns
     -------
-        The language code that corresponds to the language.
+    str or False
+        The language code that corresponds to the language or False if
+        no change was requested.
     """
     try: # TODO: handle error properly (messes up when weird text encoding)
         lang_options_regex = "|".join([i for i in codes.values()])
