@@ -13,6 +13,16 @@ Prints out your speech, in original and translation.
 - `pip install -r requirements.txt`
 - `sudo apt-get install flac`
 
+Printer setup:
+- `sudo apt install libatlas-base-dev libgstreamer1.0-dev gstreamer1.0-plugins-base gstreamer1.0-plugins-good libcups2-dev libcupsimage2-dev git build-essential cups system-config-printer`
+- `git clone https://github.com/adafruit/zj-58`
+- `cd zj-58`
+- `make`
+- `sudo ./install`
+- `lpadmin -p face_printer -v usb://POS58/Printer?serial=FMD072`
+- `lpadmin -p face_printer -E -m zjiang/ZJ-58.ppd`
+- `sudo lp -d face_printer test_image.png`
+
 Suppress annoying "pop-up" noise:
 `sudo mv /usr/share/piwiz/srprompt.wav /usr/share/piwiz/srprompt.wav.bak`
 
