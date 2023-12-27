@@ -42,3 +42,6 @@ Start the service using the commands below:
 The bot listens to your speech and repeats it back, translated into a new language.
 
 To switch languages, simply say "translate Chinese." A full list of languages is in `gtts_lang_codes.py`
+
+Say: "silent", "stop", "quiet", or "turn off" to quiet the transcription.
+Say: "active", "start", "speak to me", or "turn on" to start the transcription.
