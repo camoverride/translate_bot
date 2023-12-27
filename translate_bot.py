@@ -76,9 +76,9 @@ while True:
                     TRANSLATE_TO = new_lang
                     logging.warning(f"Switched to {new_lang}")
                 
-                if (text == "silent") or (text == "stop"):
+                if text in ["silent", "stop", "quiet", "turn off"]:
                     ACTIVE_MODE = False
-                if (text == "active") or (text == "start"):
+                if text in ["active", "start", "speak to me", "turn on"]:
                     ACTIVE_MODE = True
                 
                 if ACTIVE_MODE:
