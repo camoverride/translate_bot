@@ -9,14 +9,18 @@ Prints out your speech, in original and translation.
 - `cd translate_bot`
 - `python -m venv .venv`
 - `source .venv/bin/activate`
-<!-- - `sudo apt-get install python3-pyaudio` -->
+- `sudo apt-get install portaudio19-dev`
 - `pip install -r requirements.txt`
 - `sudo apt-get install flac`
 
-<!-- Suppress annoying "pop-up" noise:
+Suppress annoying "pop-up" noise:
 `sudo mv /usr/share/piwiz/srprompt.wav /usr/share/piwiz/srprompt.wav.bak`
 
-Change volume: `alsamixer` -->
+Suppress jack debug:
+`sudo apt-get install jackd`
+`jack_control start`
+
+Change volume: `alsamixer`
 
 
 ## Run
