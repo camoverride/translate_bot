@@ -85,7 +85,7 @@ while True:
                     
                     # Print text
                     os.system("sudo chmod 777 /dev/usb/lp0")
-                    os.system(f"{text}")
+                    os.system(f'echo -e "{text}\\n\\n\\n" > /dev/usb/lp0')
                     # os.system(f"{translation}")
 
                     # Print translation
