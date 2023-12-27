@@ -45,8 +45,8 @@ def noalsaerr():
 
 # Main event loop
 while True:
-    logging.warning("--------------------------------------")
     logging.warning(f"Function started at: {datetime.now()}")
+    logging.warning(f"Speaking mode on:    {ACTIVE_MODE}")
     try: # The main loop always continues!
         with noalsaerr() as _, sr.Microphone() as source:
             text = None
@@ -61,17 +61,15 @@ while True:
                 try:
                     text = recognizer.recognize_google(audio, language="en-us")
                 except sr.exceptions.UnknownValueError as e:
-                    logging.warning("ERROR recognizing speech. See below:")
-                    logging.warning(e)
+                    logging.warning("ERROR: Speech not understood")
                     pass
 
             except sr.exceptions.WaitTimeoutError as e:
-                logging.warning("ERROR getting audio. See below:")
-                logging.warning(e)
+                logging.warning("No speech recorded")
                 pass
 
             if text:
-                logging.warning(f"Recognized text input: {text}")
+                logging.warning(f"Recognized text input:  {text}")
 
                 new_lang = check_for_translation_change(text)
                 if new_lang:
@@ -85,9 +83,7 @@ while True:
                 
                 if ACTIVE_MODE:
                     translation = translator.translate(text, dest=TRANSLATE_TO).text
-                    logging.warning(f"Translated text: {translation}")
-
-                    logging.warning("Translating text!")
+                    logging.warning(f"Translated text output: {translation}")
                     tts = gTTS(translation, lang=TRANSLATE_TO)
                     tts.save(".tts.mp3")
                     playsound(".tts.mp3")
@@ -95,3 +91,5 @@ while True:
     except Exception as e:
         logging.warn(e)
         pass
+
+    logging.warning("--------------------------------------")
