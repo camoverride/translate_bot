@@ -1,23 +1,20 @@
 from datetime import datetime
 import logging
 import os
+import yaml
 
 
-
-# Global settings
-ACTIVE_MODE = True
-ASR_METHOD = "whisper" # "google"
-WHISPER_RECORDING_DURATION = 10
-AUDIO_CHANNELS = 2
-WHISPER_SERVER_URL = "http://192.168.4.157:5000/whisper"
+# Parse config file.
+with open("config.yaml", "r") as yamlfile:
+    config = yaml.load(yamlfile, Loader=yaml.FullLoader)
 
 # Logging
 logging.basicConfig(level=logging.WARNING)
 
 # Imports based on ASR type
-if ASR_METHOD == "whisper":
+if config["asr_method"] == "whisper":
     from whisper_utils import record_wav, asr
-elif ASR_METHOD == "google":
+elif config["asr_method"] == "google":
     import speech_recognition as sr
     recognizer = sr.Recognizer()
     recognizer.dynamic_energy_threshold = False # stop mic from recording ambient noise
@@ -48,7 +45,7 @@ def noalsaerr():
 
 # Main event loop
 while True:
-    if ASR_METHOD == "google":
+    if config["asr_method"] == "google":
         logging.warning(f"Function started at: {datetime.now()}")
         logging.warning(f"Speaking mode on:    {ACTIVE_MODE}")
         logging.warning(f"")
@@ -91,12 +88,12 @@ while True:
             pass
 
 
-    elif ASR_METHOD == "whisper":
-        audio_path = record_wav(seconds=WHISPER_RECORDING_DURATION,
+    elif config["asr_method"] == "whisper":
+        audio_path = record_wav(seconds=config["whisper_recording_duration"],
                                 save_path="_output.wav",
-                                audio_channels=AUDIO_CHANNELS)
+                                audio_channels=config["audio_channels"])
 
-        text = asr(audio_path, whisper_server_url=WHISPER_SERVER_URL)
+        text = asr(audio_path, whisper_server_url=config["whisper_server_url"])
 
         if text:
             logging.warning(f"[Whisper] recognized text input:  {text}")

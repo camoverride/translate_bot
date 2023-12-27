@@ -54,3 +54,5 @@ Start the service using the commands below:
 
 To quiet the transcription, say: "silent", "stop", "quiet", or "turn off."
 To activate the transcription, say: "active", "start", "speak to me", or "turn on."
+
+Play with the global settings in `translate_bot.py`

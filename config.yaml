@@ -1,0 +1,5 @@
+active_mode: True
+asr_method: whisper # google
+whisper_recording_duration: 10 # above 15 causes hallucinations
+audio_channels: 2
+whisper_server_url: http://192.168.4.157:5000/whisper
