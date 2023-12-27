@@ -52,5 +52,5 @@ Start the service using the commands below:
 
 ## How to use
 
-Say: "silent", "stop", "quiet", or "turn off" to quiet the transcription.
-Say: "active", "start", "speak to me", or "turn on" to start the transcription.
+To quiet the transcription, say: "silent", "stop", "quiet", or "turn off."
+To activate the transcription, say: "active", "start", "speak to me", or "turn on."
