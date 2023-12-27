@@ -89,26 +89,27 @@ while True:
 
 
     elif config["asr_method"] == "whisper":
-        audio_path = record_wav(seconds=config["whisper_recording_duration"],
-                                save_path="_output.wav",
-                                audio_channels=config["audio_channels"])
+        with noalsaerr() as _:
+            audio_path = record_wav(seconds=config["whisper_recording_duration"],
+                                    save_path="_output.wav",
+                                    audio_channels=config["audio_channels"])
 
-        text = asr(audio_path, whisper_server_url=config["whisper_server_url"])
+            text = asr(audio_path, whisper_server_url=config["whisper_server_url"])
 
-        if text:
-            logging.warning(f"[Whisper] recognized text input:  {text}")
+            if text:
+                logging.warning(f"[Whisper] recognized text input:  {text}")
 
-            if text in ["silent", "stop", "quiet", "turn off"]:
-                ACTIVE_MODE = False
-            if text in ["active", "start", "speak to me", "turn on"]:
-                ACTIVE_MODE = True
-            
-            if ACTIVE_MODE:
-                # Print text
-                os.system("sudo chmod 777 /dev/usb/lp0")
-                os.system(f'echo "{text}\\n" > /dev/usb/lp0')
-        else:
-            logging.warning("No speech recognized!")
+                if text in ["silent", "stop", "quiet", "turn off"]:
+                    ACTIVE_MODE = False
+                if text in ["active", "start", "speak to me", "turn on"]:
+                    ACTIVE_MODE = True
+                
+                if ACTIVE_MODE:
+                    # Print text
+                    os.system("sudo chmod 777 /dev/usb/lp0")
+                    os.system(f'echo "{text}\\n" > /dev/usb/lp0')
+            else:
+                logging.warning("No speech recognized!")
 
     
     logging.warning("--------------------------------------")
