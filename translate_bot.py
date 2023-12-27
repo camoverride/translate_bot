@@ -91,7 +91,7 @@ while True:
                     # Print translation
 
     except Exception as e:
-        logging.warn(e)
+        logging.warning(e)
         pass
 
     logging.warning("--------------------------------------")
