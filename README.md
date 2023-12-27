@@ -1,22 +1,22 @@
-# Translate Bot
+# Transmissions
 
-Translates to a language of your choice!
+Prints out your speech, in original and translation.
 
 
 ## Pi Setup
 
-- `git clone https://github.com/camoverride/newlife.git`
-- `cd newlife`
-- `python3 -m venv .venv`
+- `git clone git@github.com:camoverride/translate_bot.git`
+- `cd translate_bot`
+- `python -m venv .venv`
 - `source .venv/bin/activate`
-- `sudo apt-get install  python3-pyaudio`
+<!-- - `sudo apt-get install python3-pyaudio` -->
 - `pip install -r requirements.txt`
 - `sudo apt-get install flac`
 
-Suppress annoying "pop-up" noise:
+<!-- Suppress annoying "pop-up" noise:
 `sudo mv /usr/share/piwiz/srprompt.wav /usr/share/piwiz/srprompt.wav.bak`
 
-Change volume: `alsamixer`
+Change volume: `alsamixer` -->
 
 
 ## Run
@@ -38,7 +38,5 @@ Start the service using the commands below:
 
 
 ## How to use
-
-The bot listens to your speech and repeats it back, translated into a new language.
 
 To switch languages, simply say "translate Chinese." A full list of languages is in `gtts_lang_codes.py`

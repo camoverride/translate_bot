@@ -2,8 +2,6 @@ from datetime import datetime
 import logging
 import os
 from googletrans import Translator
-from gtts import gTTS
-from playsound import playsound
 import speech_recognition as sr
 from gtts_lang_codes import check_for_translation_change
 
@@ -16,7 +14,7 @@ logging.basicConfig(level=logging.WARNING)
 recognizer = sr.Recognizer()
 translator = Translator()
 recognizer.dynamic_energy_threshold = False # stop mic from recording ambient noise
-TRANSLATE_TO = "es"
+TRANSLATE_TO = "jp"
 ACTIVE_MODE = True
 
 
@@ -84,9 +82,13 @@ while True:
                 if ACTIVE_MODE:
                     translation = translator.translate(text, dest=TRANSLATE_TO).text
                     logging.warning(f"Translated text output: {translation}")
-                    tts = gTTS(translation, lang=TRANSLATE_TO)
-                    tts.save(".tts.mp3")
-                    playsound(".tts.mp3")
+                    
+                    # Print text
+                    os.system("sudo chmod 777 /dev/usb/lp0")
+                    os.system(f"{text}")
+                    os.system(f"{translation}")
+
+                    # Print translation
 
     except Exception as e:
         logging.warn(e)
