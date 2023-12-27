@@ -85,7 +85,7 @@ while True:
                     
                     # Print text and translation
                     os.system("sudo chmod 777 /dev/usb/lp0")
-                    os.system(f'echo "{text}\\n\\n\\n" > /dev/usb/lp0')
+                    os.system(f'echo "{text}\\n" > /dev/usb/lp0')
                     # os.system(f'echo "{translation}\\n\\n\\n" > /dev/usb/lp0')
 
     except Exception as e:
