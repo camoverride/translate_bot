@@ -49,7 +49,6 @@ while True:
     if config["asr_method"] == "google":
         logging.warning(f"Function started at: {datetime.now()}")
         logging.warning(f"Speaking mode on:    {ACTIVE_MODE}")
-        logging.warning(f"")
         try: # The main loop always continues!
             with noalsaerr() as _, sr.Microphone() as source:
                 text = None
