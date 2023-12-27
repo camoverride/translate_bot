@@ -1,18 +1,26 @@
 from datetime import datetime
 import logging
 import os
-import speech_recognition as sr
 
 
 
 # Global settings
-logging.basicConfig(level=logging.WARNING)
-# logging.basicConfig(filename="logs.log", encoding="utf-8", level=logging.DEBUG)
-
-recognizer = sr.Recognizer()
-recognizer.dynamic_energy_threshold = False # stop mic from recording ambient noise
 ACTIVE_MODE = True
+ASR_METHOD = "whisper" # "google"
+WHISPER_RECORDING_DURATION = 10
+AUDIO_CHANNELS = 2
+WHISPER_SERVER_URL = "http://192.168.4.157:5000/whisper"
 
+# Logging
+logging.basicConfig(level=logging.WARNING)
+
+# Imports based on ASR type
+if ASR_METHOD == "whisper":
+    from whisper_utils import record_wav, asr
+elif ASR_METHOD == "google":
+    import speech_recognition as sr
+    recognizer = sr.Recognizer()
+    recognizer.dynamic_energy_threshold = False # stop mic from recording ambient noise
 
 # Suppress horrible Alsa debug
 from ctypes import *
@@ -37,46 +45,71 @@ def noalsaerr():
     asound.snd_lib_error_set_handler(None)
 
 
+
 # Main event loop
 while True:
-    logging.warning(f"Function started at: {datetime.now()}")
-    logging.warning(f"Speaking mode on:    {ACTIVE_MODE}")
-    try: # The main loop always continues!
-        with noalsaerr() as _, sr.Microphone() as source:
-            text = None
+    if ASR_METHOD == "google":
+        logging.warning(f"Function started at: {datetime.now()}")
+        logging.warning(f"Speaking mode on:    {ACTIVE_MODE}")
+        logging.warning(f"")
+        try: # The main loop always continues!
+            with noalsaerr() as _, sr.Microphone() as source:
+                text = None
 
-            try:
-                # Get Audio clip
-                logging.warning("> Getting audio")
-                audio = recognizer.listen(source, timeout=5, phrase_time_limit=5)
-
-                # Speech-to-text
-                logging.warning("> Speech to text")
                 try:
-                    text = recognizer.recognize_google(audio, language="en-us")
-                except sr.exceptions.UnknownValueError as e:
-                    logging.warning("ERROR: Speech not understood")
+                    # Get Audio clip
+                    logging.warning("> Getting audio")
+                    audio = recognizer.listen(source, timeout=5, phrase_time_limit=5)
+
+                    # Speech-to-text
+                    logging.warning("> Speech to text")
+                    try:
+                        text = recognizer.recognize_google(audio, language="en-us")
+                    except sr.exceptions.UnknownValueError as e:
+                        logging.warning("ERROR: Speech not understood")
+                        pass
+
+                except sr.exceptions.WaitTimeoutError as e:
+                    logging.warning("No speech recorded")
                     pass
 
-            except sr.exceptions.WaitTimeoutError as e:
-                logging.warning("No speech recorded")
-                pass
+                if text:
+                    logging.warning(f"[Google] recognized text input:  {text}")
 
-            if text:
-                logging.warning(f"Recognized text input:  {text}")
+                    if text in ["silent", "stop", "quiet", "turn off"]:
+                        ACTIVE_MODE = False
+                    if text in ["active", "start", "speak to me", "turn on"]:
+                        ACTIVE_MODE = True
+                    
+                    if ACTIVE_MODE:
+                        # Print text
+                        os.system("sudo chmod 777 /dev/usb/lp0")
+                        os.system(f'echo "{text}\\n" > /dev/usb/lp0')
 
-                if text in ["silent", "stop", "quiet", "turn off"]:
-                    ACTIVE_MODE = False
-                if text in ["active", "start", "speak to me", "turn on"]:
-                    ACTIVE_MODE = True
-                
-                if ACTIVE_MODE:
-                    # Print text
-                    os.system("sudo chmod 777 /dev/usb/lp0")
-                    os.system(f'echo "{text}\\n" > /dev/usb/lp0')
+        except Exception as e:
+            logging.warning(e)
+            pass
 
-    except Exception as e:
-        logging.warning(e)
-        pass
 
+    elif ASR_METHOD == "whisper":
+        audio_path = record_wav(seconds=WHISPER_RECORDING_DURATION,
+                                save_path="_output.wav",
+                                audio_channels=AUDIO_CHANNELS)
+
+        text = asr(audio_path, whisper_server_url=WHISPER_SERVER_URL)
+
+        if text:
+            logging.warning(f"[Whisper] recognized text input:  {text}")
+
+            if text in ["silent", "stop", "quiet", "turn off"]:
+                ACTIVE_MODE = False
+            if text in ["active", "start", "speak to me", "turn on"]:
+                ACTIVE_MODE = True
+            
+            if ACTIVE_MODE:
+                # Print text
+                os.system("sudo chmod 777 /dev/usb/lp0")
+                os.system(f'echo "{text}\\n" > /dev/usb/lp0')
+
+    
     logging.warning("--------------------------------------")
