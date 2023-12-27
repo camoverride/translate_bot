@@ -42,6 +42,7 @@ def noalsaerr():
     asound.snd_lib_error_set_handler(None)
 
 
+ACTIVE_MODE = True
 
 # Main event loop
 while True:
