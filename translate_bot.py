@@ -80,6 +80,7 @@ while True:
                 ACTIVE_MODE = True
             
             if ACTIVE_MODE:
+                print(TRANSLATE_TO)
                 translation = translator.translate(text, dest=TRANSLATE_TO).text
                 logging.warning(f"Translated text output: {translation}")
                 
