@@ -107,6 +107,8 @@ while True:
                 # Print text
                 os.system("sudo chmod 777 /dev/usb/lp0")
                 os.system(f'echo "{text}\\n" > /dev/usb/lp0')
+        else:
+            logging.warning("No speech recognized!")
 
     
     logging.warning("--------------------------------------")
