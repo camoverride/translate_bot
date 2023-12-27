@@ -1,9 +1,7 @@
 from datetime import datetime
 import logging
 import os
-from googletrans import Translator
 import speech_recognition as sr
-from gtts_lang_codes import check_for_translation_change
 
 
 
@@ -12,7 +10,6 @@ logging.basicConfig(level=logging.WARNING)
 # logging.basicConfig(filename="logs.log", encoding="utf-8", level=logging.DEBUG)
 
 recognizer = sr.Recognizer()
-translator = Translator()
 recognizer.dynamic_energy_threshold = False # stop mic from recording ambient noise
 TRANSLATE_TO = "ja"
 ACTIVE_MODE = True
@@ -69,24 +66,15 @@ while True:
             if text:
                 logging.warning(f"Recognized text input:  {text}")
 
-                # new_lang = check_for_translation_change(text)
-                # if new_lang:
-                #     TRANSLATE_TO = new_lang
-                #     logging.warning(f"Switched to {new_lang}")
-                
-                # if (text == "silent") or (text == "stop"):
-                #     ACTIVE_MODE = False
-                # if (text == "active") or (text == "start"):
-                #     ACTIVE_MODE = True
+                if text in ["silent", "stop", "quiet", "turn off"]:
+                    ACTIVE_MODE = False
+                if text in ["active", "start", "speak to me", "turn on"]:
+                    ACTIVE_MODE = True
                 
                 if ACTIVE_MODE:
-                    # translation = translator.translate(text, dest=TRANSLATE_TO).text
-                    # logging.warning(f"Translated text output: {translation}")
-                    
-                    # Print text and translation
+                    # Print text
                     os.system("sudo chmod 777 /dev/usb/lp0")
                     os.system(f'echo "{text}\\n" > /dev/usb/lp0')
-                    # os.system(f'echo "{translation}\\n\\n\\n" > /dev/usb/lp0')
 
     except Exception as e:
         logging.warning(e)

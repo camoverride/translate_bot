@@ -1,6 +1,6 @@
 # Transmissions
 
-Prints out your speech, in original and translation.
+Prints out your speech.
 
 
 ## Pi Setup
@@ -19,9 +19,9 @@ Printer setup:
 - `cd zj-58`
 - `make`
 - `sudo ./install`
-- `lpadmin -p face_printer -v usb://POS58/Printer?serial=FMD072`
-- `lpadmin -p face_printer -E -m zjiang/ZJ-58.ppd`
-- `sudo lp -d face_printer test_image.png`
+- `lpadmin -p text_printer -v usb://POS58/Printer?serial=FMD072`
+- `lpadmin -p text_printer -E -m zjiang/ZJ-58.ppd`
+- `sudo lp -d text_printer test_image.png`
 
 Suppress annoying "pop-up" noise:
 `sudo mv /usr/share/piwiz/srprompt.wav /usr/share/piwiz/srprompt.wav.bak`
@@ -39,7 +39,6 @@ Change volume: `alsamixer`
 
 Stop: `sudo shutdown -h now`
 
-
 Start a service with *systemd*. This will start the program when the computer starts and revive it when it dies. Copy the contents of `translate_bot.service` to `/etc/systemd/system/translate_bot.service` (via `sudo vim /etc/systemd/system/translate_bot.service`).
 
 Start the service using the commands below:
@@ -53,4 +52,5 @@ Start the service using the commands below:
 
 ## How to use
 
-To switch languages, simply say "translate Chinese." A full list of languages is in `gtts_lang_codes.py`
+Say: "silent", "stop", "quiet", or "turn off" to quiet the transcription.
+Say: "active", "start", "speak to me", or "turn on" to start the transcription.
