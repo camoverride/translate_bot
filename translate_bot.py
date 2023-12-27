@@ -80,13 +80,13 @@ while True:
                     ACTIVE_MODE = True
                 
                 if ACTIVE_MODE:
-                    translation = translator.translate(text, dest=TRANSLATE_TO).text
-                    logging.warning(f"Translated text output: {translation}")
+                    # translation = translator.translate(text, dest=TRANSLATE_TO).text
+                    # logging.warning(f"Translated text output: {translation}")
                     
                     # Print text
                     os.system("sudo chmod 777 /dev/usb/lp0")
                     os.system(f"{text}")
-                    os.system(f"{translation}")
+                    # os.system(f"{translation}")
 
                     # Print translation
 
