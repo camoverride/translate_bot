@@ -11,7 +11,6 @@ logging.basicConfig(level=logging.WARNING)
 
 recognizer = sr.Recognizer()
 recognizer.dynamic_energy_threshold = False # stop mic from recording ambient noise
-TRANSLATE_TO = "ja"
 ACTIVE_MODE = True
 
 
